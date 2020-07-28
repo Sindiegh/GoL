@@ -1,6 +1,6 @@
 public class GoL {
 
-     void Game(){
+    public static void main(String[] args){
 
 
     int horizontal = 10, vertical = 10;
@@ -32,59 +32,38 @@ public class GoL {
         }
         System.out.println();
     }
+        nextGen(grid,vertical,horizontal);
         System.out.println();
 }
     // this nextGen function prints out the next generation
     static void nextGen(int grid[][], int vertical, int horizontal) {
-        int neighboursAlive = 0;
-        int[][] futureGen = new int[vertical][horizontal];
-
-        //iterating  throughout the cells
-        for (int x = 1; x < vertical - 1; x++) {
-            for (int y = 1; y < horizontal - 1; y++) {
-
-                // find the number of neighbours that are alive.
-                for (int i = -1; i <= 1; i++) {
-                    for (int j = -1; j <= 1; j++) {
-                        neighboursAlive += grid[x + i][y + j];
-                        neighboursAlive -= grid[x][y];
-                    }
-                }
-
-                // Implementing the rules
-
-                // Cell with fewer than two live neighbours dies
-                if ((neighboursAlive < 2)) {
-                    futureGen[x][y] = 0;
-                }
-
-                    // Cell with 2 or 3 live neighbors lives on to the next generation
-                else if ((grid[x][y] == 1) && (neighboursAlive ==2 || neighboursAlive ==3)){
-
-                    futureGen[x][y] = grid[x][y];
-                }
-
-                // live cell with more than three live neighbors dies
-                else if ((grid[x][y] == 1) && (neighboursAlive > 3)){
-                    futureGen[x][y] = 0;
-                }
-
-                    // any dead cell with exactly three live neighbors becomes a live cell
-                else if ((grid[x][y] == 0) && (neighboursAlive == 3)) {
-                    futureGen[x][y] = 1;
-                }
-
-                    // cells remains the same.
-                else {
-                    futureGen[x][y] = grid[x][y];
-                }
+        // The next board
+        int[][] next = new int[vertical][horizontal];
+        //[full] Looping but skipping the edge cells
+        for (int x = 1; x < vertical-1; x++) {
+            for (int y = 1; y < horizontal-1; y++) {
+                // Add up all the neighbor states to
+                // calculate the number of live neighbors.
+                int neighbors = 0;
+                for (int i = -1; i <= 1; i++)
+                    for (int j = -1; j <= 1; j++)
+                        neighbors += grid[x+i][y+j];
+                // Correct by subtracting the cell state itself.
+                neighbors -= grid[x][y];
+                //[full] <b>The rules of life!</b>
+                if ((grid[x][y] == 1) && (neighbors <  2)) next[x][y] = 0;
+                else if ((grid[x][y] == 1) && (neighbors == 2 || neighbors == 3 )) next[x][y] = 1;
+                else if ((grid[x][y] == 1) && (neighbors >  3)) next[x][y] = 0;
+                else if ((grid[x][y] == 0) && (neighbors == 3)) next[x][y] = 1;
+                else next[x][y] = grid[x][y];
             }
         }
-        // the next line displays the next generation
-        System.out.println("Next Generation");
-        for (int i = 0; i < vertical; i++) {
+        //[end]
+        // The 2D array “next” is now the current board.
+        System.out.println("\n"+" nextGeneration ");
+        for(int i = 0; i <vertical;i++) {
             for (int j = 0; j < horizontal; j++) {
-                if (futureGen[i][j] == 0) {
+                if (next[i][j] == 0){
                     System.out.print("+");
                 }
                 else {

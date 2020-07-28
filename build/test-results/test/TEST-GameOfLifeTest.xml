@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="GameOfLifeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-07-28T00:39:26" hostname="admin2-ThinkCentre-M72e" time="0.008">
+  <properties/>
+  <testcase name="AnyLiveCellLessTwoNeighbors" classname="GameOfLifeTest" time="0.008"/>
+  <system-out><![CDATA[
+ nextGeneration 
+++++++++++
+++++++++++
+++++++++++
+++++++++++
+++++++#+++
+++++++##++
++++++++#++
+++++++++++
+++++++++++
+++++++++++
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
